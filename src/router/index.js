@@ -1,29 +1,46 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue       from 'vue';
+import VueRouter from 'vue-router';
+import {store}   from '../store/index';
 
-Vue.use(VueRouter)
-
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
-
+Vue.use(VueRouter);
+const routes = [
+    {
+      path: '/',
+      name: 'Dashboard',
+      component: () => import(/* webpackChunkName: "Dashboard" */  '../views/Dashboard.vue')
+    },
+    {
+      path: '/tipomasa',
+      name: 'tipoMasa',
+      component: () => import(/* webpackChunkName: "TipoMasa" */   '../views/Mantenedores/TipoMasa.vue')
+    },
+    {
+      path: '/sabormasa',
+      name: 'sabormasa',
+      component: () => import(/* webpackChunkName: "SaborMasa" */  '../views/Mantenedores/SaborMasa.vue')
+    },
+    {
+      path: '/sabortorta',
+      name: 'saborTorta',
+      component: () => import(/* webpackChunkName: "SaborTorta" */ '../views/Mantenedores/SaborTorta.vue')
+    },
+    {
+      path: '/torta',
+      name: 'torta',
+      component: () => import(/* webpackChunkName: "Torta" */      '../views/Mantenedores/Torta.vue')
+    },
+    {
+      path: '*',
+      name: 'NotFound',
+      component: () => import(/* webpackChunkName: "NotFound" */    '../views/NotFound.vue')
+    }
+];
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
-
-export default router
+});
+router.beforeEach((to, from, next) => {
+  next(store.state.auth);
+});
+export default router;

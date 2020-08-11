@@ -1,12 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue  from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export default new Vuex.Store({
+export const store =  new Vuex.Store({
   state: {
+    auth:      false,
+    adminAuth: false,
+    token:     localStorage.getItem('accessToken') || null
   },
   mutations: {
+    cambiar:      (state) => state.auth      = !state.auth, 
+    cambiarAdmin: (state) => state.adminAuth = !state.adminAuth
   },
   actions: {
   },
