@@ -5,10 +5,16 @@ Vue.use(Vuex);
 
 export const store =  new Vuex.Store({
   state: {
-    auth:      false,
-    adminAuth: false,
-    menu:      true,
-    token:     localStorage.getItem('accessToken') || null
+    auth:        false,
+    adminAuth:   false,
+    menu:        true,
+    sucursal_id: 1,
+    sucursales:  [],
+    tortas:      [],
+    masaTipos:   [],
+    sabores:     [],
+    masaSabores: [],
+    token:       localStorage.getItem('accessToken') || null
   },
   mutations: {
     cambiar:      (state) => state.auth      = !state.auth, 

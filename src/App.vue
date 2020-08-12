@@ -1,11 +1,10 @@
 <template>
 <!-- PARENT -->
   <div id="app" :class="{inactiveMenu: !$store.state.menu}"> 
-<!--     <template v-if="!$store.state.auth">
+    <template v-if="!$store.state.auth">
       <Login/>
     </template>
-    <template v-if="$store.state.auth"> -->
-    <template>
+    <template v-if="$store.state.auth">
        <!-- HEADER -->
        <Header class="header"/>
        <!-- NAV -->
@@ -26,21 +25,23 @@
        </div>
       </transition>
        <!-- OPTION -->
-      <div id="opcion">
+      <div id="opcion" :class="{moveOptionLeft: !$store.state.menu}">
        <router-view></router-view>
       </div>
     </template>
   </div>
 </template>
 <script>
-import Header from './components/Header.vue';
-import Login  from './components/auth/Login';
+import Header    from './components/Header.vue';
+import Login     from './components/auth/Login';
+import { store } from './store';
 export default {
   components: {
     Header,
     Login
-  }
-}
+  },
+   created: () => { if(store.state.token) store.commit('cambiar') }
+ }
 </script>
 <style lang="scss">
   body{
@@ -139,17 +140,20 @@ export default {
     margin-left: 50px;
   }
   .slide-fade-enter-active {
-    transition: all .1s ease;
+    transition: all .2s ease;
   }
   .slide-fade-leave-active {
-    transition: all .1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
   .slide-fade-enter, .slide-fade-leave-to{
     transform: translateX(-10px);
     opacity: 0;
   }
   .inactiveMenu {
-      transition: margin-left .4px ease;
-      margin-left:-200px;
+      transition: margin-left .4px ease-in;
+  }
+  .moveOptionLeft {
+      transition: margin 300ms cubic-bezier(.65,.46,.84,.65);
+      margin-left: -100px !important;
   }
 </style>
