@@ -1,6 +1,6 @@
 import Vue         from 'vue';
 import VueRouter   from 'vue-router';
-
+import { store }   from '../store/index'
 Vue.use(VueRouter);
 const routes = [
     { path: '/',           name: 'Dashboard',  component: () => import(/* webpackChunkName: "Dashboard" */   '../views/Dashboard.vue')},
@@ -15,7 +15,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
-/* router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
   next(store.state.auth);
-}); */
+});
 export default router;
