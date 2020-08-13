@@ -30,11 +30,30 @@ export default {
                 authorization: localStorage.getItem('accessToken')
             }
         };
-        const elements = store.state[`${this.data}`];
-        var url = '';
-        for(const elem of elements){
+        var Data       = this.data.split(',');
+        const elements = store.state[`${Data[0]}`];
+        var url        = '';
+        for(var elem of elements){
           url = `${this.uri}/${this.tableName}/${this.method}/${elem.id}`;
-          if(this.data === 'tortas'){
+          if(Data[0] == 'tortas'){
+            for(let d of store.state[`${Data[1]}`]){
+              if(d.nombre == elem.masaTipo_nombre){
+                  elem.masaTipo_id = d.id;
+                  break;
+              }
+            }
+            for(let d of store.state[`${Data[2]}`]){
+              if(d.nombre == elem.masaSabor_nombre){
+                  elem.masaSabor_id = d.id;
+                  break;
+              }
+            }
+            for(let d of store.state[`${Data[3]}`]){
+              if(d.nombre == elem.sabor_nombre){
+                  elem.sabor_id = d.id;
+                  break;
+              }
+            }
             body = { 
               masaTipo_id:  elem.masaTipo_id,
               masaSabor_id: elem.masaSabor_id,

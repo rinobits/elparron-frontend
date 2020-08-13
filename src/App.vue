@@ -34,7 +34,7 @@
 <script>
 import Header    from './components/Header.vue';
 import Login     from './components/auth/Login';
-import { store } from './store/index';
+import { store } from './store/index.js';
 export default {
   components: {
     Header,
