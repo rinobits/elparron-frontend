@@ -37,15 +37,6 @@ export default {
     Buscar,
     Registrar
   },
-  data: () => {
-    return {
-       masaSabores:    [],
-       sucursal_id:    store.sucursal_id,
-    }
-  },
-/*   beforeMount() {
-    this.callMasaSabores();
-  } */
 }
 </script>
 <style scoped lang="scss">
@@ -55,9 +46,6 @@ export default {
   grid-template-rows: repeat(1, 1fr);
   grid-template-columns: repeat(4, 1fr);
   justify-items: start;
-  .title{
-
-  }
   .buttons{
     margin-top:12px;
     display:grid;
