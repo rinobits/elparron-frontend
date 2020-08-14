@@ -5,42 +5,40 @@
     </button>
   </div>
 </template>
-
 <script>
 import {store} from '../../store';
 import  axios  from 'axios';
 export default {
   name: 'Buscar',
-  data: () => {
-    return {
-      uri: process.env.VUE_APP_URI
-    }
-  },
   props: [
-    'tableName', 'method', 'data'
+    'tableName', 'method'
   ],
   methods: {
-    getData(){
-      return new Promise((resolve, reject) => {
-          const url = `${this.uri}/${this.tableName}/${this.method}`;
-          const config = {
-              headers: {
-                  authorization: localStorage.getItem('accessToken')
-              }
-          };
-          axios.get(url, config)
-            .then(r => {
-              resolve(r.data);
-            })
-            .catch(e => reject(e))
-      })
-    },
     callGetData(){
-      this.getData()
-        .then(r => {
-          store.state[`${this.data}`] = r;
-        })
-        .catch(console.log);
+      var tableNames = this.tableName.split(',');
+      for(let i = 0; i < tableNames.length; i++){
+        tableNames[i] = tableNames[i].toLowerCase();
+        if(tableNames[i] === 'masatipo'){
+          store.dispatch('getMasaTipos')
+            .then(console.log)
+            .catch(console.log);
+        }
+        if(tableNames[i] === 'masasabor'){
+          store.dispatch('getMasaSabores')
+            .then(console.log)
+            .catch(console.log);
+        }
+        if(tableNames[i] === 'sabor'){
+          store.dispatch('getSabores')
+            .then(console.log)
+            .catch(console.log);
+        }
+        if(tableNames[i] === 'torta'){
+          store.dispatch('getTortas')
+            .then(console.log)
+            .catch(console.log);
+        }
+      }
     }
   }
 }

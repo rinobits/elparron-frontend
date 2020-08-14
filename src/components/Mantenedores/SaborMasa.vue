@@ -13,11 +13,11 @@
       <div class="content">
         <table>
             <h1>Sabores de Masas</h1>
-            <div v-for="(tipo, index) in masaSabores" :key="index">
+            <div v-for="(tipo, index) in $store.state.masaSabores" :key="index">
               <input
                 type="text"
-                v-model="tipo.nombre"
-                value="tipo.nombre"
+                v-model="$store.state.masaSabores[index].nombre"
+                value="$store.state.masaSabores[index].nombre"
                 />
             </div>
         </table>
@@ -39,43 +39,13 @@ export default {
   },
   data: () => {
     return {
-       masaSabores:    store.state.masaSabores,
+       masaSabores:    [],
        sucursal_id:    store.sucursal_id,
-       uri:            process.env.VUE_APP_URI
     }
   },
-  methods: {
-    getSaborMasa(sucursal_id){
-      return new Promise((resolve, reject) => {
-        const tableName = `masasabor`;
-        const method    = 'getall';
-        const url       = `${this.uri}/${tableName}/${method}`;
-        const config = {
-            headers: {
-                authorization: localStorage.getItem('accessToken')
-            }
-        };
-        axios.get(url, config)
-          .then(r => {
-            resolve(r);
-          })
-          .catch(e => {
-            reject(e);
-          });
-      })
-    },
-    callSaborMasa(){
-      this.getSaborMasa(this.sucursal_id)
-        .then(r => {
-          store.state.masaSabores = r.data;
-          this.masaSabores = store.state.masaSabores;
-        })
-        .catch(console.log);
-    }
-  },
-  async mounted() {
-    await this.callSaborMasa();
-  }
+/*   beforeMount() {
+    this.callMasaSabores();
+  } */
 }
 </script>
 <style scoped lang="scss">

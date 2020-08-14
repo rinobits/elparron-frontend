@@ -13,11 +13,11 @@
       <div class="content">
         <table>
             <h1>Tipos de Masas</h1>
-            <div v-for="(tipo, index) in masaTipos" :key="index">
+            <div v-for="(tipo, index) in $store.state.masaTipos" :key="index">
               <input
                 type="text"
-                v-model="masaTipos[index].nombre"
-                value="masaTipos[index].nombre"
+                v-model="$store.state.masaTipos[index].nombre"
+                value="$store.state.masaTipos[index].nombre"
                 />
             </div>
         </table>
@@ -37,45 +37,7 @@ export default {
     Buscar,
     Registrar
   },
-  data: () => {
-    return {
-       masaTipos:    store.state.masaTipos,
-       sucursal_id:  store.sucursal_id,
-       uri:          process.env.VUE_APP_URI
-    }
-  },
-  methods: {
-    getMasaTipos(sucursal_id){
-      return new Promise((resolve, reject) => {
-        const tableName = `masatipo`;
-        const method    = 'getall';
-        const url       = `${this.uri}/${tableName}/${method}`;
-        const config = {
-            headers: {
-                authorization: localStorage.getItem('accessToken')
-            }
-        };
-        axios.get(url, config)
-          .then(r => {
-            resolve(r);
-          })
-          .catch(e => {
-            reject(e);
-          });
-      })
-    },
-    callMasaTipos(){
-      this.getMasaTipos(this.sucursal_id)
-        .then(r => {
-          store.state.masaTipos = r.data;
-          this.masaTipos = store.state.masaTipos;
-        })
-        .catch(console.log);
-    }
-  },
-  async mounted() {
-    await this.callMasaTipos();
-  }
+
 }
 </script>
 <style scoped lang="scss">
@@ -85,9 +47,6 @@ export default {
   grid-template-rows: repeat(1, 1fr);
   grid-template-columns: repeat(4, 1fr);
   justify-items: start;
-  .title{
-
-  }
   .buttons{
     margin-top:12px;
     display:grid;

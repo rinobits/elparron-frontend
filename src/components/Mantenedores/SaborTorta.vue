@@ -13,11 +13,11 @@
       <div class="content">
         <table>
             <h1>Sabores de Tortas</h1>
-            <div v-for="(tipo, index) in sabores" :key="index">
+            <div v-for="(tipo, index) in $store.state.sabores" :key="index">
               <input
                 type="text"
-                v-model="tipo.nombre"
-                value="tipo.nombre"
+                value="$store.state.sabores[index].nombre"
+                v-model="$store.state.sabores[index].nombre"
                 />
             </div>
         </table>
@@ -37,45 +37,6 @@ export default {
     Buscar,
     Registrar
   },
-  data: () => {
-    return {
-       sabores:      store.state.sabores,
-       sucursal_id:  store.sucursal_id,
-       uri:          process.env.VUE_APP_URI
-    }
-  },
-  methods: {
-    getSaborTorta(sucursal_id){
-      return new Promise((resolve, reject) => {
-        const tableName = `sabor`;
-        const method    = 'getall';
-        const url       = `${this.uri}/${tableName}/${method}`;
-        const config = {
-            headers: {
-                authorization: localStorage.getItem('accessToken')
-            }
-        };
-        axios.get(url, config)
-          .then(r => {
-            resolve(r);
-          })
-          .catch(e => {
-            reject(e);
-          });
-      })
-    },
-    callSaborTorta(){
-      this.getSaborTorta(this.sucursal_id)
-        .then(r => {
-          store.state.sabores = r.data;
-          this.sabores = store.state.sabores;
-        })
-        .catch(console.log);
-    }
-  },
-  async mounted() {
-    await this.callSaborTorta();
-  }
 }
 </script>
 <style scoped lang="scss">
